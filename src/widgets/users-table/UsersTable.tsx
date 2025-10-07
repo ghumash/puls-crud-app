@@ -7,8 +7,8 @@ import type { ColumnsType } from 'antd/es/table'
 import type { User, Role } from '@/entities/user'
 import { ROLE_COLORS } from '@/entities/user'
 import { UserDeleteButton } from '@/features/user-delete'
-import { formatPhone } from '@/shared/lib'
 import { TABLE_PAGINATION_CONFIG } from '@/shared/config'
+import { formatPhoneForDisplay } from '@/shared/lib'
 
 interface UsersTableProps {
   users: User[]
@@ -24,7 +24,6 @@ interface UsersTableProps {
   }
 }
 
-
 function UsersTableComponent({
   users,
   loading,
@@ -33,71 +32,64 @@ function UsersTableComponent({
   onRefresh,
   pagination,
 }: UsersTableProps) {
-  const columns: ColumnsType<User> = useMemo(() => [
-    {
-      title: 'ID',
-      dataIndex: 'id',
-      key: 'id',
-      width: 80,
-    },
-    {
-      title: 'Имя',
-      dataIndex: 'name',
-      key: 'name',
-    },
-    {
-      title: 'Email',
-      dataIndex: 'email',
-      key: 'email',
-    },
-    {
-      title: 'Телефон',
-      dataIndex: 'phone',
-      key: 'phone',
-      render: (phone: string) => formatPhone(phone),
-    },
-    {
-      title: 'Роль',
-      dataIndex: 'role',
-      key: 'role',
-      render: (role: Role) => (
-        <Tag color={ROLE_COLORS[role]}>{role}</Tag>
-      ),
-    },
-    {
-      title: 'Действия',
-      key: 'actions',
-      width: 120,
-      render: (_, record) => (
-        <Space size="small">
-          <Button
-            type="text"
-            icon={<EditOutlined />}
-            onClick={() => onEdit(record)}
-            size="small"
-          />
-          <UserDeleteButton
-            userId={record.id}
-            userName={record.name}
-            onSuccess={onRefresh}
-          />
-        </Space>
-      ),
-    },
-  ], [onEdit, onRefresh])
+  const columns: ColumnsType<User> = useMemo(
+    () => [
+      {
+        title: 'ID',
+        dataIndex: 'id',
+        key: 'id',
+        width: 80,
+      },
+      {
+        title: 'Имя',
+        dataIndex: 'name',
+        key: 'name',
+      },
+      {
+        title: 'Email',
+        dataIndex: 'email',
+        key: 'email',
+      },
+      {
+        title: 'Телефон',
+        dataIndex: 'phone',
+        key: 'phone',
+        render: (phone: string) => formatPhoneForDisplay(phone),
+      },
+      {
+        title: 'Роль',
+        dataIndex: 'role',
+        key: 'role',
+        render: (role: Role) => <Tag color={ROLE_COLORS[role]}>{role}</Tag>,
+      },
+      {
+        title: 'Действия',
+        key: 'actions',
+        width: 120,
+        render: (_, record) => (
+          <Space size="small">
+            <Button
+              type="text"
+              icon={<EditOutlined />}
+              onClick={() => onEdit(record)}
+              size="small"
+            />
+            <UserDeleteButton userId={record.id} userName={record.name} onSuccess={onRefresh} />
+          </Space>
+        ),
+      },
+    ],
+    [onEdit, onRefresh]
+  )
 
   return (
     <div>
       <div style={{ marginBottom: 16 }}>
-        <Button
-          type="primary"
-          icon={<PlusOutlined />}
-          onClick={onCreate}
-        >
+        <Button type="primary" icon={<PlusOutlined />} onClick={onCreate}>
           Добавить пользователя
         </Button>
       </div>
-      
+
       <Table
         columns={columns}
         dataSource={users}

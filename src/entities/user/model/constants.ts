@@ -4,7 +4,7 @@ export const ROLES: readonly Role[] = ['Admin', 'Manager', 'User'] as const
 
 export const ROLE_COLORS: Record<Role, string> = {
   Admin: 'red',
-  Manager: 'blue', 
+  Manager: 'blue',
   User: 'green',
 } as const
 

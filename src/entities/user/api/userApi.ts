@@ -13,4 +13,3 @@ export async function getUsers(page = 1, limit = 10): Promise<UsersResponse> {
 
   return { data, total, page, limit }
 }
-

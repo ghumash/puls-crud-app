@@ -1,2 +1,1 @@
-export * from './api/createUser'
-export * from './ui/UserCreateModal'
+export { UserCreateModal } from './ui/UserCreateModal'

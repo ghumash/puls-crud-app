@@ -1,8 +1,12 @@
 import { parsePhoneNumberWithError, isValidPhoneNumber, CountryCode } from 'libphonenumber-js'
 
-export function normalizePhone(phone: string, country: CountryCode = 'RU'): string {
+// Конфигурация по умолчанию
+const DEFAULT_COUNTRY: CountryCode = 'RU'
+const PHONE_FORMAT_EXAMPLE = '+79991234567'
+
+export function normalizePhone(phone: string, country: CountryCode = DEFAULT_COUNTRY): string {
   if (!phone) return phone
-  
+
   try {
     const phoneNumber = parsePhoneNumberWithError(phone, country)
     return phoneNumber.format('E.164')
@@ -11,9 +15,22 @@ export function normalizePhone(phone: string, country: CountryCode = 'RU'): stri
   }
 }
 
-export function formatPhone(phone: string, country: CountryCode = 'RU'): string {
+export function isValidPhone(phone: string, country: CountryCode = DEFAULT_COUNTRY): boolean {
+  if (!phone) return false
+
+  try {
+    return isValidPhoneNumber(phone, country)
+  } catch {
+    return false
+  }
+}
+
+export function formatPhoneForDisplay(
+  phone: string,
+  country: CountryCode = DEFAULT_COUNTRY
+): string {
   if (!phone) return phone
-  
+
   try {
     const phoneNumber = parsePhoneNumberWithError(phone, country)
     return phoneNumber.formatNational()
@@ -22,12 +39,19 @@ export function formatPhone(phone: string, country: CountryCode = 'RU'): string 
   }
 }
 
-export function isValidPhone(phone: string, country: CountryCode = 'RU'): boolean {
-  if (!phone) return false
-  
-  try {
-    return isValidPhoneNumber(phone, country)
-  } catch {
-    return false
+export function getPhoneValidationMessage(country: CountryCode = DEFAULT_COUNTRY): string {
+  if (country === 'RU') {
+    return `Формат: ${PHONE_FORMAT_EXAMPLE}`
   }
+  return 'Некорректный формат телефона'
 }
+
+export function getPhonePlaceholder(country: CountryCode = DEFAULT_COUNTRY): string {
+  if (country === 'RU') {
+    return PHONE_FORMAT_EXAMPLE
+  }
+  return 'Введите телефон'
+}
+
+// Константы для экспорта
+export { DEFAULT_COUNTRY, PHONE_FORMAT_EXAMPLE }

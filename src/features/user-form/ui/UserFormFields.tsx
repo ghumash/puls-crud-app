@@ -4,8 +4,9 @@ import { Form, Input, Select } from 'antd'
 import { Control, Controller, FieldErrors } from 'react-hook-form'
 import type { UserForm } from '@/entities/user'
 import { ROLE_OPTIONS } from '@/entities/user'
+import { normalizePhone, getPhonePlaceholder } from '@/shared/lib'
 
-interface UserFormProps {
+interface UserFormFieldsProps {
   control: Control<UserForm>
   errors: FieldErrors<UserForm>
 }
@@ -18,17 +19,13 @@ interface FormFieldProps {
 
 function FormField({ label, error, children }: FormFieldProps) {
   return (
-    <Form.Item
-      label={label}
-      validateStatus={error ? 'error' : ''}
-      help={error}
-    >
+    <Form.Item label={label} validateStatus={error ? 'error' : ''} help={error}>
       {children}
     </Form.Item>
   )
 }
 
-export function UserFormFields({ control, errors }: UserFormProps) {
+export function UserFormFields({ control, errors }: UserFormFieldsProps) {
   return (
     <Form layout="vertical">
       <FormField label="Имя" error={errors.name?.message}>
@@ -51,7 +48,17 @@ export function UserFormFields({ control, errors }: UserFormProps) {
         <Controller
           name="phone"
           control={control}
-          render={({ field }) => <Input {...field} placeholder="+7 (999) 123-45-67" />}
+          render={({ field }) => (
+            <Input
+              {...field}
+              placeholder={getPhonePlaceholder()}
+              onBlur={(e) => {
+                const normalized = normalizePhone(e.target.value)
+                field.onChange(normalized)
+                field.onBlur()
+              }}
+            />
+          )}
         />
       </FormField>
 

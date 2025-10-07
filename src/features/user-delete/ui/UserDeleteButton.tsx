@@ -36,13 +36,7 @@ export function UserDeleteButton({ userId, userName, onSuccess }: UserDeleteButt
       okText="Да"
       cancelText="Нет"
     >
-      <Button
-        type="text"
-        danger
-        icon={<DeleteOutlined />}
-        loading={loading}
-        size="small"
-      />
+      <Button type="text" danger icon={<DeleteOutlined />} loading={loading} size="small" />
     </Popconfirm>
   )
 }

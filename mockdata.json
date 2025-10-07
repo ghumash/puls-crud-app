@@ -3,105 +3,105 @@
     "id": "1",
     "name": "Иван Петров",
     "email": "ivan.petrov@email.com",
-    "phone": "+7 (999) 123-45-67",
+    "phone": "+79991234567",
     "role": "Admin"
   },
   {
-    "id": "2", 
+    "id": "2",
     "name": "Анна Сидорова",
     "email": "anna.sidorova@email.com",
-    "phone": "+7 (999) 234-56-78",
+    "phone": "+79992345678",
     "role": "Manager"
   },
   {
     "id": "3",
     "name": "Алексей Козлов",
-    "email": "alexey.kozlov@email.com", 
-    "phone": "+7 (999) 345-67-89",
+    "email": "alexey.kozlov@email.com",
+    "phone": "+79993456789",
     "role": "User"
   },
   {
     "id": "4",
     "name": "Мария Волкова",
     "email": "maria.volkova@email.com",
-    "phone": "+7 (999) 456-78-90",
+    "phone": "+79994567890",
     "role": "Manager"
   },
   {
     "id": "5",
     "name": "Дмитрий Морозов",
     "email": "dmitry.morozov@email.com",
-    "phone": "+7 (999) 567-89-01", 
+    "phone": "+79995678901",
     "role": "User"
   },
   {
     "id": "6",
     "name": "Елена Новикова",
     "email": "elena.novikova@email.com",
-    "phone": "+7 (999) 678-90-12",
+    "phone": "+79996789012",
     "role": "Admin"
   },
   {
     "id": "7",
     "name": "Андрей Лебедев",
     "email": "andrey.lebedev@email.com",
-    "phone": "+7 (999) 789-01-23",
+    "phone": "+79997890123",
     "role": "User"
   },
   {
-    "id": "8", 
+    "id": "8",
     "name": "Ольга Соколова",
     "email": "olga.sokolova@email.com",
-    "phone": "+7 (999) 890-12-34",
+    "phone": "+79998901234",
     "role": "Manager"
   },
   {
     "id": "9",
     "name": "Сергей Орлов",
     "email": "sergey.orlov@email.com",
-    "phone": "+7 (999) 901-23-45",
+    "phone": "+79999012345",
     "role": "User"
   },
   {
     "id": "10",
     "name": "Татьяна Павлова",
-    "email": "tatiana.pavlova@email.com", 
-    "phone": "+7 (999) 012-34-56",
+    "email": "tatiana.pavlova@email.com",
+    "phone": "+79990123456",
     "role": "Admin"
   },
   {
     "id": "11",
     "name": "Николай Федоров",
     "email": "nikolay.fedorov@email.com",
-    "phone": "+7 (999) 123-45-68",
+    "phone": "+79991234568",
     "role": "Manager"
   },
   {
     "id": "12",
     "name": "Екатерина Михайлова",
     "email": "ekaterina.mikhaylova@email.com",
-    "phone": "+7 (999) 234-56-79", 
+    "phone": "+79992345679",
     "role": "User"
   },
   {
     "id": "13",
     "name": "Владимир Кузнецов",
     "email": "vladimir.kuznetsov@email.com",
-    "phone": "+7 (999) 345-67-80",
+    "phone": "+79993456780",
     "role": "User"
   },
   {
     "id": "14",
     "name": "Ирина Попова",
     "email": "irina.popova@email.com",
-    "phone": "+7 (999) 456-78-91",
+    "phone": "+79994567891",
     "role": "Manager"
   },
   {
     "id": "15",
     "name": "Максим Васильев",
     "email": "maxim.vasiliev@email.com",
-    "phone": "+7 (999) 567-89-02",
+    "phone": "+79995678902",
     "role": "Admin"
   }
 ]

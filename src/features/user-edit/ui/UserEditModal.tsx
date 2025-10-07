@@ -1,12 +1,11 @@
 'use client'
 
+import { useMemo } from 'react'
 import { Modal } from 'antd'
 import type { UserForm, User } from '@/entities/user'
 import { updateUser } from '../api/updateUser'
-import { normalizePhone, showApiError, showSuccessMessage, getUserFormData } from '@/shared/lib'
-import { useEffect } from 'react'
-import { useUserForm } from '@/shared/hooks'
-import { UserFormFields } from '@/shared/ui'
+import { showApiError, showSuccessMessage, getUserFormData } from '@/shared/lib'
+import { UserFormFields, useUserModal } from '@/features/user-form'
 
 interface UserEditModalProps {
   open: boolean
@@ -16,28 +15,13 @@ interface UserEditModalProps {
 }
 
 export function UserEditModal({ open, user, onCancel, onSuccess }: UserEditModalProps) {
-  const {
-    control,
-    handleSubmit,
-    reset,
-    formState: { errors, isSubmitting },
-  } = useUserForm()
+  const defaultValues = useMemo(() => (user ? getUserFormData(user) : undefined), [user])
 
-  useEffect(() => {
-    if (user) {
-      reset(getUserFormData(user))
-    }
-  }, [user, reset])
-
-  const onSubmit = async (data: UserForm) => {
+  const handleSubmit = async (data: UserForm) => {
     if (!user) return
 
     try {
-      const normalizedData = {
-        ...data,
-        phone: normalizePhone(data.phone),
-      }
-      await updateUser(user.id, normalizedData)
+      await updateUser(user.id, data)
       showSuccessMessage('Пользователь обновлён')
       onSuccess()
     } catch (error) {
@@ -45,17 +29,24 @@ export function UserEditModal({ open, user, onCancel, onSuccess }: UserEditModal
     }
   }
 
-  const handleCancel = () => {
-    reset()
-    onCancel()
-  }
+  const {
+    control,
+    errors,
+    isSubmitting,
+    handleSubmit: onSubmit,
+    handleCancel,
+  } = useUserModal({
+    defaultValues,
+    onSubmit: handleSubmit,
+    onCancel,
+  })
 
   return (
     <Modal
       title="Редактировать пользователя"
       open={open}
       onCancel={handleCancel}
-      onOk={handleSubmit(onSubmit)}
+      onOk={onSubmit}
       confirmLoading={isSubmitting}
       okText="Сохранить"
       cancelText="Отменить"

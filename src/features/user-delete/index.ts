@@ -1,2 +1,1 @@
-export * from './api/deleteUser'
-export * from './ui/UserDeleteButton'
+export { UserDeleteButton } from './ui/UserDeleteButton'

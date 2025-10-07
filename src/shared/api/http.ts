@@ -10,7 +10,6 @@ export const http = axios.create({
 http.interceptors.response.use(
   (response) => response,
   (error) => {
-    // Просто возвращаем ошибку, обработка UI сделана в feature слоях
     return Promise.reject(error)
   }
 )
