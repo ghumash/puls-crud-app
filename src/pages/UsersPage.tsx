@@ -11,7 +11,7 @@ import { useToggle } from '@/shared/hooks'
 import { config } from '@/shared/config'
 import styles from './UsersPage.module.scss'
 
-export function UsersPage() {
+function UsersPage() {
   const [users, setUsers] = useState<User[]>([])
   const [loading, setLoading] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
@@ -97,3 +97,5 @@ export function UsersPage() {
     </div>
   )
 }
+
+export default UsersPage
