@@ -1,5 +1,5 @@
 import { Skeleton, Button, Table, Space } from 'antd'
-import { PlusOutlined, EditOutlined } from '@ant-design/icons'
+import { PlusOutlined } from '@ant-design/icons'
 import { memo } from 'react'
 
 function UsersTableSkeletonComponent() {
@@ -68,7 +68,7 @@ function UsersTableSkeletonComponent() {
         loading={false}
         rowKey="key"
       />
-      
+
       <div style={{ marginTop: 16, textAlign: 'right' }}>
         <Skeleton.Button active size="small" style={{ width: 200 }} />
       </div>
