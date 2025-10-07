@@ -53,10 +53,10 @@ export function UserEditModal({ open, user, onCancel, onSuccess }: UserEditModal
       width="100%"
       style={{ maxWidth: 480, top: 20 }}
       styles={{
-        body: { 
+        body: {
           maxHeight: 'calc(100vh - 200px)',
-          overflowY: 'auto'
-        }
+          overflowY: 'auto',
+        },
       }}
     >
       <UserFormFields control={control} errors={errors} />

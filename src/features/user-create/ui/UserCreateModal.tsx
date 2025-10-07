@@ -46,10 +46,10 @@ export function UserCreateModal({ open, onCancel, onSuccess }: UserCreateModalPr
       width="100%"
       style={{ maxWidth: 480, top: 20 }}
       styles={{
-        body: { 
+        body: {
           maxHeight: 'calc(100vh - 200px)',
-          overflowY: 'auto'
-        }
+          overflowY: 'auto',
+        },
       }}
     >
       <UserFormFields control={control} errors={errors} />

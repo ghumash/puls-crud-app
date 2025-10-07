@@ -106,19 +106,10 @@ function UsersTableComponent({
         </div>
       </div>
       <div className={styles.userActions}>
-        <Button
-          type="text"
-          icon={<EditOutlined />}
-          onClick={() => onEdit(user)}
-          size="small"
-        >
+        <Button type="text" icon={<EditOutlined />} onClick={() => onEdit(user)} size="small">
           Редактировать
         </Button>
-        <UserDeleteButton 
-          userId={user.id} 
-          userName={user.name} 
-          onSuccess={onRefresh} 
-        />
+        <UserDeleteButton userId={user.id} userName={user.name} onSuccess={onRefresh} />
       </div>
     </Card>
   )
@@ -126,9 +117,9 @@ function UsersTableComponent({
   return (
     <div className={styles.usersTable}>
       <div className={styles.header}>
-        <Button 
-          type="primary" 
-          icon={<PlusOutlined />} 
+        <Button
+          type="primary"
+          icon={<PlusOutlined />}
           onClick={onCreate}
           className={styles.createButton}
         >
@@ -151,11 +142,7 @@ function UsersTableComponent({
 
       <div className={styles.mobileUserCard}>
         {!loading && users.map(renderMobileCard)}
-        {loading && (
-          <div style={{ textAlign: 'center', padding: '20px' }}>
-            Загрузка...
-          </div>
-        )}
+        {loading && <div style={{ textAlign: 'center', padding: '20px' }}>Загрузка...</div>}
       </div>
     </div>
   )

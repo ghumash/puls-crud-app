@@ -2,34 +2,33 @@
 
 .usersPage {
   @include container-padding;
-  
+
   .usersCard {
     @include card-responsive;
-    
+
     @include mobile {
       :global(.ant-card-head) {
         padding: 16px;
-        
+
         :global(.ant-card-head-title) {
           font-size: 18px;
           font-weight: 600;
         }
       }
-      
+
       :global(.ant-card-body) {
         padding: 16px;
       }
     }
-    
+
     @include tablet {
       :global(.ant-card-head) {
         padding: 20px 20px 0;
       }
-      
+
       :global(.ant-card-body) {
         padding: 20px;
       }
     }
   }
 }
-
