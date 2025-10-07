@@ -5,6 +5,7 @@ import { Control, Controller, FieldErrors } from 'react-hook-form'
 import type { UserForm } from '@/entities/user'
 import { ROLE_OPTIONS } from '@/entities/user'
 import { normalizePhone, getPhonePlaceholder } from '@/shared/lib'
+import styles from './UserFormFields.module.scss'
 
 interface UserFormFieldsProps {
   control: Control<UserForm>
@@ -27,7 +28,7 @@ function FormField({ label, error, children }: FormFieldProps) {
 
 export function UserFormFields({ control, errors }: UserFormFieldsProps) {
   return (
-    <Form layout="vertical">
+    <Form layout="vertical" className={styles.userForm}>
       <FormField label="Имя" error={errors.name?.message}>
         <Controller
           name="name"

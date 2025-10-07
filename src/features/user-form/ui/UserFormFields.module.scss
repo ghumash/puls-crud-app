@@ -1,0 +1,59 @@
+@import '@/shared/styles/mixins';
+
+.userForm {
+  :global(.ant-form-item) {
+    margin-bottom: 20px;
+    
+    @include mobile {
+      margin-bottom: 16px;
+    }
+  }
+  
+  :global(.ant-form-item-label) {
+    padding-bottom: 6px;
+    
+    @include mobile {
+      padding-bottom: 4px;
+    }
+    
+    > label {
+      font-weight: 500;
+      color: rgba(0, 0, 0, 0.85);
+      
+      @include mobile {
+        font-size: 14px;
+      }
+    }
+  }
+  
+  :global(.ant-input),
+  :global(.ant-select-selector) {
+    border-radius: 6px;
+    border: 1px solid #d9d9d9;
+    transition: all 0.2s;
+    
+    @include input-responsive;
+    
+    &:hover {
+      border-color: #40a9ff;
+    }
+    
+    &:focus,
+    &:focus-within {
+      border-color: #1890ff;
+      box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+    }
+  }
+  
+  :global(.ant-select-selector) {
+    @include mobile {
+      padding: 8px 12px !important;
+    }
+  }
+  
+  :global(.ant-form-item-explain-error) {
+    margin-top: 4px;
+    font-size: 12px;
+    color: #ff4d4f;
+  }
+}

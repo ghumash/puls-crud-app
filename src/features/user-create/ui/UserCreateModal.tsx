@@ -43,6 +43,14 @@ export function UserCreateModal({ open, onCancel, onSuccess }: UserCreateModalPr
       confirmLoading={isSubmitting}
       okText="Создать"
       cancelText="Отменить"
+      width="100%"
+      style={{ maxWidth: 480, top: 20 }}
+      styles={{
+        body: { 
+          maxHeight: 'calc(100vh - 200px)',
+          overflowY: 'auto'
+        }
+      }}
     >
       <UserFormFields control={control} errors={errors} />
     </Modal>

@@ -31,3 +31,39 @@ $desktop: 1200px;
   align-items: center;
   justify-content: space-between;
 }
+
+@mixin container-padding {
+  padding: 24px;
+  
+  @include mobile {
+    padding: 16px 12px;
+  }
+  
+  @include tablet {
+    padding: 20px 16px;
+  }
+}
+
+@mixin card-responsive {
+  width: 100%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  
+  @include mobile {
+    margin: 0;
+    border-radius: 8px;
+  }
+}
+
+@mixin button-responsive {
+  @include mobile {
+    width: 100%;
+    height: 40px;
+  }
+}
+
+@mixin input-responsive {
+  @include mobile {
+    font-size: 16px;
+    height: 40px;
+  }
+}

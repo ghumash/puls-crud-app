@@ -9,6 +9,7 @@ import { getUsers, type User } from '@/entities/user'
 import { showApiError } from '@/shared/lib'
 import { useToggle } from '@/shared/hooks'
 import { config } from '@/shared/config'
+import styles from './UsersPage.module.scss'
 
 export function UsersPage() {
   const [users, setUsers] = useState<User[]>([])
@@ -61,8 +62,8 @@ export function UsersPage() {
   }
 
   return (
-    <div style={{ padding: '24px' }}>
-      <Card title="Управление пользователями">
+    <div className={styles.usersPage}>
+      <Card title="Управление пользователями" className={styles.usersCard}>
         <UsersTable
           users={users}
           loading={loading}
