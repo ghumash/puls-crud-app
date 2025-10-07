@@ -1,7 +1,7 @@
 'use client'
 
-import { Table, Button, Space, Tag, Card } from 'antd'
-import { EditOutlined, PlusOutlined, PhoneOutlined, MailOutlined } from '@ant-design/icons'
+import { Table, Button, Space, Tag } from 'antd'
+import { EditOutlined, PlusOutlined } from '@ant-design/icons'
 import { memo, useMemo } from 'react'
 import type { ColumnsType } from 'antd/es/table'
 import type { User, Role } from '@/entities/user'
@@ -9,7 +9,7 @@ import { ROLE_COLORS } from '@/entities/user'
 import { UserDeleteButton } from '@/features/user-delete'
 import { TABLE_PAGINATION_CONFIG } from '@/shared/config'
 import { formatPhoneForDisplay } from '@/shared/lib'
-import styles from './UsersTable.module.scss'
+import { UsersTableSkeleton } from './UsersTableSkeleton'
 
 interface UsersTableProps {
   users: User[]
@@ -83,67 +83,28 @@ function UsersTableComponent({
     [onEdit, onRefresh]
   )
 
-  const renderMobileCard = (user: User) => (
-    <Card key={user.id} className={styles.userCard} size="small">
-      <div className={styles.userHeader}>
-        <span className={styles.userName}>{user.name}</span>
-        <Tag color={ROLE_COLORS[user.role]} className={styles.userRole}>
-          {user.role}
-        </Tag>
-      </div>
-      <div className={styles.userInfo}>
-        <div className={styles.infoItem}>
-          <span className={styles.label}>ID:</span>
-          <span>{user.id}</span>
-        </div>
-        <div className={styles.infoItem}>
-          <MailOutlined />
-          <span>{user.email}</span>
-        </div>
-        <div className={styles.infoItem}>
-          <PhoneOutlined />
-          <span>{formatPhoneForDisplay(user.phone)}</span>
-        </div>
-      </div>
-      <div className={styles.userActions}>
-        <Button type="text" icon={<EditOutlined />} onClick={() => onEdit(user)} size="small">
-          Редактировать
-        </Button>
-        <UserDeleteButton userId={user.id} userName={user.name} onSuccess={onRefresh} />
-      </div>
-    </Card>
-  )
+  if (loading) {
+    return <UsersTableSkeleton />
+  }
 
   return (
-    <div className={styles.usersTable}>
-      <div className={styles.header}>
-        <Button
-          type="primary"
-          icon={<PlusOutlined />}
-          onClick={onCreate}
-          className={styles.createButton}
-        >
+    <div>
+      <div style={{ marginBottom: 16 }}>
+        <Button type="primary" icon={<PlusOutlined />} onClick={onCreate}>
           Добавить пользователя
         </Button>
       </div>
 
-      <div className={styles.tableWrapper}>
-        <Table
-          columns={columns}
-          dataSource={users}
-          loading={loading}
-          rowKey="id"
-          pagination={{
-            ...pagination,
-            ...TABLE_PAGINATION_CONFIG,
-          }}
-        />
-      </div>
-
-      <div className={styles.mobileUserCard}>
-        {!loading && users.map(renderMobileCard)}
-        {loading && <div style={{ textAlign: 'center', padding: '20px' }}>Загрузка...</div>}
-      </div>
+      <Table
+        columns={columns}
+        dataSource={users}
+        loading={false}
+        rowKey="id"
+        pagination={{
+          ...pagination,
+          ...TABLE_PAGINATION_CONFIG,
+        }}
+      />
     </div>
   )
 }

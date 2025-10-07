@@ -1,5 +1,6 @@
 import { parsePhoneNumberWithError, isValidPhoneNumber, CountryCode } from 'libphonenumber-js'
 
+// Конфигурация по умолчанию
 const DEFAULT_COUNTRY: CountryCode = 'RU'
 const PHONE_FORMAT_EXAMPLE = '+79991234567'
 
@@ -52,4 +53,5 @@ export function getPhonePlaceholder(country: CountryCode = DEFAULT_COUNTRY): str
   return 'Введите телефон'
 }
 
+// Константы для экспорта
 export { DEFAULT_COUNTRY, PHONE_FORMAT_EXAMPLE }
