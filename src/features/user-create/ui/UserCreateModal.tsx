@@ -1,11 +1,11 @@
 'use client'
 
-import { Modal, Form, Input, Select, message } from 'antd'
-import { useForm, Controller } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { userSchema, type UserForm } from '@/entities/user/model/schema'
-import { createUser } from '@/entities/user/api/userApi'
-import { normalizePhone } from '@/shared/lib/phone'
+import { Modal } from 'antd'
+import type { UserForm } from '@/entities/user'
+import { createUser } from '../api/createUser'
+import { normalizePhone, showApiError, showSuccessMessage } from '@/shared/lib'
+import { useUserForm } from '@/shared/hooks'
+import { UserFormFields } from '@/shared/ui'
 
 interface UserCreateModalProps {
   open: boolean
@@ -19,9 +19,7 @@ export function UserCreateModal({ open, onCancel, onSuccess }: UserCreateModalPr
     handleSubmit,
     reset,
     formState: { errors, isSubmitting },
-  } = useForm<UserForm>({
-    resolver: zodResolver(userSchema),
-  })
+  } = useUserForm()
 
   const onSubmit = async (data: UserForm) => {
     try {
@@ -30,11 +28,11 @@ export function UserCreateModal({ open, onCancel, onSuccess }: UserCreateModalPr
         phone: normalizePhone(data.phone),
       }
       await createUser(normalizedData)
-      message.success('Пользователь создан')
+      showSuccessMessage('Пользователь создан')
       reset()
       onSuccess()
     } catch (error) {
-      message.error(`Ошибка при создании пользователя: ${error}`)
+      showApiError(error, 'Ошибка при создании пользователя')
     }
   }
 
@@ -53,61 +51,7 @@ export function UserCreateModal({ open, onCancel, onSuccess }: UserCreateModalPr
       okText="Создать"
       cancelText="Отменить"
     >
-      <Form layout="vertical">
-        <Form.Item
-          label="Имя"
-          validateStatus={errors.name ? 'error' : ''}
-          help={errors.name?.message}
-        >
-          <Controller
-            name="name"
-            control={control}
-            render={({ field }) => <Input {...field} placeholder="Введите имя" />}
-          />
-        </Form.Item>
-
-        <Form.Item
-          label="Email"
-          validateStatus={errors.email ? 'error' : ''}
-          help={errors.email?.message}
-        >
-          <Controller
-            name="email"
-            control={control}
-            render={({ field }) => <Input {...field} placeholder="example@email.com" />}
-          />
-        </Form.Item>
-
-        <Form.Item
-          label="Телефон"
-          validateStatus={errors.phone ? 'error' : ''}
-          help={errors.phone?.message}
-        >
-          <Controller
-            name="phone"
-            control={control}
-            render={({ field }) => <Input {...field} placeholder="+7 (999) 123-45-67" />}
-          />
-        </Form.Item>
-
-        <Form.Item
-          label="Роль"
-          validateStatus={errors.role ? 'error' : ''}
-          help={errors.role?.message}
-        >
-          <Controller
-            name="role"
-            control={control}
-            render={({ field }) => (
-              <Select {...field} placeholder="Выберите роль">
-                <Select.Option value="Admin">Admin</Select.Option>
-                <Select.Option value="User">User</Select.Option>
-                <Select.Option value="Manager">Manager</Select.Option>
-              </Select>
-            )}
-          />
-        </Form.Item>
-      </Form>
+      <UserFormFields control={control} errors={errors} />
     </Modal>
   )
 }

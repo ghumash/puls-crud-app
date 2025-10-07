@@ -1,12 +1,13 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
-import { Card, message } from 'antd'
-import { UsersTable } from '@/widgets/users-table/ui/UsersTable'
-import { UserCreateModal } from '@/features/user-create/ui/UserCreateModal'
-import { UserEditModal } from '@/features/user-edit/ui/UserEditModal'
-import { getUsers } from '@/entities/user/api/userApi'
-import type { User } from '@/entities/user/model/types'
+import { Card } from 'antd'
+import { UsersTable } from '@/widgets/users-table'
+import { UserCreateModal } from '@/features/user-create'
+import { UserEditModal } from '@/features/user-edit'
+import { getUsers, type User } from '@/entities/user'
+import { showApiError } from '@/shared/lib'
+import { useToggle } from '@/shared/hooks'
 import { config } from '@/shared/config'
 
 export function UsersPage() {
@@ -14,8 +15,8 @@ export function UsersPage() {
   const [loading, setLoading] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
   const [totalUsers, setTotalUsers] = useState(0)
-  const [createModalOpen, setCreateModalOpen] = useState(false)
-  const [editModalOpen, setEditModalOpen] = useState(false)
+  const [createModalOpen, createModalControls] = useToggle(false)
+  const [editModalOpen, editModalControls] = useToggle(false)
   const [editingUser, setEditingUser] = useState<User | null>(null)
 
   const fetchUsers = useCallback(async (page = 1) => {
@@ -25,7 +26,7 @@ export function UsersPage() {
       setUsers(response.data)
       setTotalUsers(response.total)
     } catch (error) {
-      message.error(`Ошибка при загрузке пользователей: ${error}`)
+      showApiError(error, 'Ошибка при загрузке пользователей')
     } finally {
       setLoading(false)
     }
@@ -40,19 +41,19 @@ export function UsersPage() {
   }
 
   const handleCreateSuccess = () => {
-    setCreateModalOpen(false)
+    createModalControls.setFalse()
     fetchUsers(currentPage)
   }
 
   const handleEditSuccess = () => {
-    setEditModalOpen(false)
+    editModalControls.setFalse()
     setEditingUser(null)
     fetchUsers(currentPage)
   }
 
   const handleEdit = (user: User) => {
     setEditingUser(user)
-    setEditModalOpen(true)
+    editModalControls.setTrue()
   }
 
   const handleRefresh = () => {
@@ -66,7 +67,7 @@ export function UsersPage() {
           users={users}
           loading={loading}
           onEdit={handleEdit}
-          onCreate={() => setCreateModalOpen(true)}
+          onCreate={createModalControls.setTrue}
           onRefresh={handleRefresh}
           pagination={{
             current: currentPage,
@@ -79,7 +80,7 @@ export function UsersPage() {
 
       <UserCreateModal
         open={createModalOpen}
-        onCancel={() => setCreateModalOpen(false)}
+        onCancel={createModalControls.setFalse}
         onSuccess={handleCreateSuccess}
       />
 
@@ -87,7 +88,7 @@ export function UsersPage() {
         open={editModalOpen}
         user={editingUser}
         onCancel={() => {
-          setEditModalOpen(false)
+          editModalControls.setFalse()
           setEditingUser(null)
         }}
         onSuccess={handleEditSuccess}

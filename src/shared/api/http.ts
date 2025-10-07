@@ -1,6 +1,5 @@
 import axios from 'axios'
 import { config } from '@/shared/config'
-import { message } from 'antd'
 
 export const http = axios.create({
   baseURL: config.apiBaseUrl,
@@ -11,7 +10,7 @@ export const http = axios.create({
 http.interceptors.response.use(
   (response) => response,
   (error) => {
-    message.error(`API Error: ${error.response?.data || error.message}`)
+    // Просто возвращаем ошибку, обработка UI сделана в feature слоях
     return Promise.reject(error)
   }
 )

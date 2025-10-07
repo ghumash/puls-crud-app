@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { isValidPhone } from '@/shared/lib/phone'
+import { isValidPhone } from '@/shared/lib'
 
 export const userSchema = z.object({
   name: z.string().trim().min(2, 'Минимум 2 символа'),

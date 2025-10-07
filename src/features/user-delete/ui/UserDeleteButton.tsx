@@ -1,8 +1,9 @@
 'use client'
 
-import { Popconfirm, Button, message } from 'antd'
+import { Popconfirm, Button } from 'antd'
 import { DeleteOutlined } from '@ant-design/icons'
-import { deleteUser } from '@/entities/user/api/userApi'
+import { deleteUser } from '../api/deleteUser'
+import { showApiError, showSuccessMessage } from '@/shared/lib'
 import { useState } from 'react'
 
 interface UserDeleteButtonProps {
@@ -18,10 +19,10 @@ export function UserDeleteButton({ userId, userName, onSuccess }: UserDeleteButt
     setLoading(true)
     try {
       await deleteUser(userId)
-      message.success('Пользователь удален')
+      showSuccessMessage('Пользователь удалён')
       onSuccess()
     } catch (error) {
-      message.error(`Ошибка при удалении пользователя: ${error}`)
+      showApiError(error, 'Ошибка при удалении пользователя')
     } finally {
       setLoading(false)
     }

@@ -2,10 +2,13 @@
 
 import { Table, Button, Space, Tag } from 'antd'
 import { EditOutlined, PlusOutlined } from '@ant-design/icons'
+import { memo, useMemo } from 'react'
 import type { ColumnsType } from 'antd/es/table'
-import type { User, Role } from '@/entities/user/model/types'
-import { UserDeleteButton } from '@/features/user-delete/ui/UserDeleteButton'
-import { formatPhone } from '@/shared/lib/phone'
+import type { User, Role } from '@/entities/user'
+import { ROLE_COLORS } from '@/entities/user'
+import { UserDeleteButton } from '@/features/user-delete'
+import { formatPhone } from '@/shared/lib'
+import { TABLE_PAGINATION_CONFIG } from '@/shared/config'
 
 interface UsersTableProps {
   users: User[]
@@ -21,13 +24,8 @@ interface UsersTableProps {
   }
 }
 
-const roleColors: Record<Role, string> = {
-  Admin: 'red',
-  Manager: 'blue',
-  User: 'green',
-}
 
-export function UsersTable({
+function UsersTableComponent({
   users,
   loading,
   onEdit,
@@ -35,7 +33,7 @@ export function UsersTable({
   onRefresh,
   pagination,
 }: UsersTableProps) {
-  const columns: ColumnsType<User> = [
+  const columns: ColumnsType<User> = useMemo(() => [
     {
       title: 'ID',
       dataIndex: 'id',
@@ -63,7 +61,7 @@ export function UsersTable({
       dataIndex: 'role',
       key: 'role',
       render: (role: Role) => (
-        <Tag color={roleColors[role]}>{role}</Tag>
+        <Tag color={ROLE_COLORS[role]}>{role}</Tag>
       ),
     },
     {
@@ -86,7 +84,7 @@ export function UsersTable({
         </Space>
       ),
     },
-  ]
+  ], [onEdit, onRefresh])
 
   return (
     <div>
@@ -107,12 +105,11 @@ export function UsersTable({
         rowKey="id"
         pagination={{
           ...pagination,
-          showSizeChanger: false,
-          showQuickJumper: true,
-          showTotal: (total, range) =>
-            `${range[0]}-${range[1]} из ${total} записей`,
+          ...TABLE_PAGINATION_CONFIG,
         }}
       />
     </div>
   )
 }
+
+export const UsersTable = memo(UsersTableComponent)
