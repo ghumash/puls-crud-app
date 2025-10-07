@@ -48,7 +48,6 @@ function UsersTableSkeletonComponent() {
     },
   ]
 
-  // Создаём массив пустых данных для skeleton строк
   const skeletonData = Array.from({ length: 10 }, (_, index) => ({
     key: index,
     id: index,
