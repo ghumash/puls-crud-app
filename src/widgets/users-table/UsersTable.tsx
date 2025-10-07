@@ -94,8 +94,7 @@ function UsersTableComponent({
       </div>
       <div className={styles.userInfo}>
         <div className={styles.infoItem}>
-          <span className={styles.label}>ID:</span>
-          <span>{user.id}</span>
+          <span className={styles.label}>ID: {user.id}</span>
         </div>
         <div className={styles.infoItem}>
           <MailOutlined />
